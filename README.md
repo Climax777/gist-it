@@ -22,6 +22,10 @@ Associated the handler with a path is pretty easy, for example:
 		( r'(.*)', dispatch_gist_it ),
 	], debug=True )
 
+###WordPress Plugin
+
+There is also a [WordPress Plugin](http://sudarmuthu.com/wordpress/wp-github-gist), which allows you to embed gist and files from Github in your blog posts or pages.
+
 ### Testing
 
 To run python unit2 tests:
