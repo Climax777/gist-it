@@ -19,10 +19,40 @@ def parse_footer( footer_option ):
         return '1'
     elif footer_option == '0' or footer_option == 'false' or footer_option == 'none' or footer_option == 'no':
         return '0'
-    elif footer_option == 'noby':
+    elif footer_option == 'minimal':
         return footer_option
     else:
         return '1'
+
+def parse_style( style_option ):
+    if style_option is None or style_option is True:
+        return '1'
+    elif style_option is False:
+        return '0'
+
+    style_option = str( style_option ).lower().strip()
+    if style_option == '1' or style_option == '' or style_option == 'true':
+        return '1'
+    elif style_option == '0' or style_option == 'false' or style_option == 'none' or style_option == 'no':
+        return '0'
+    else:
+        return '1'
+
+def parse_highlight( option ):
+    if option is None or option is True:
+        return 'prettify'
+    elif option is False:
+        return '0'
+
+    option = str( option ).lower().strip()
+    if option == '1' or option == '' or option == 'true':
+        return 'prettify'
+    elif option == '0' or option == 'false' or option == 'none' or option == 'no':
+        return '0'
+    elif option == 'deferred-prettify':
+        return option
+    else:
+        return 'prettify'
 
 def parse_slice( slice_option ):
     if slice_option is None:
@@ -66,7 +96,7 @@ class Gist:
             'raw_path', 'raw_url', 
             'user_repository', 'user_repository_branch_path', 'user_repository_url',
             'start_line', 'end_line',
-            'footer'
+            'footer', 'style', 'highlight',
         ]
 
     @classmethod
@@ -77,7 +107,7 @@ class Gist:
         return match
 
     @classmethod
-    def parse( self, location, slice_option = None, footer_option = None ):
+    def parse( self, location, slice_option = None, footer_option = None, style_option = None, highlight_option = None ):
         match = self.match( location )
         if not match:
             return None
@@ -114,6 +144,8 @@ class Gist:
         parse[ 'end_line' ] = slice_option[1]
 
         parse[ 'footer' ] = parse_footer( footer_option )
+        parse[ 'style' ] = parse_style( style_option )
+        parse[ 'highlight' ] = parse_highlight( highlight_option )
 
         return Gist( **parse )
 

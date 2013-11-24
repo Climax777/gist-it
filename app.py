@@ -47,12 +47,17 @@ class dispatch_index( RequestHandler ):
     def get( self ):
         self.render_template( 'index.jinja.html' )
 
+class dispatch_test( RequestHandler ):
+    def get( self ):
+        return gist_it_appengine.dispatch_test( self )
+
 class dispatch_gist_it( RequestHandler ):
     def get( self, location ):
         return gist_it_appengine.dispatch_gist_it( self, location )
 
 wsgi_application = webapp.WSGIApplication( [
     ( r'/', dispatch_index ),
+    ( r'/test', dispatch_test ),
     ( r'/xyzzy/(.*)', dispatch_gist_it ),
     ( r'(.*)', dispatch_gist_it ),
 ], debug=_DEBUG_ )
