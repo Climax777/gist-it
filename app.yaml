@@ -1,5 +1,6 @@
 application: craftycode-gist-it
 version: 1
+threadsafe: true
 
 runtime: python
 api_version: 1
